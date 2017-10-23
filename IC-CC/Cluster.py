@@ -63,13 +63,18 @@ second = input("Eixo-Y:")
 x = dict[first]
 y = dict[second]
 
+<<<<<<< HEAD
 
 
 plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.5,s=300,c = df.Data,marker= 'o')
+=======
+plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.5,s=100,c = df.Data,marker= '^')
+>>>>>>> 180be3e526e697afa4a3090e2056afe02819ddf0
 plt.title(clm[first - 1] + " X " + clm[second - 1])
 plt.xlabel(clm[first - 1])
 plt.ylabel(clm[second - 1])
 
+<<<<<<< HEAD
 
 patch1 = mpatches.Patch(color = '#440154',label='2010')
 patch2 = mpatches.Patch(color = '#46327E',label='2011')
@@ -80,6 +85,19 @@ patch6 = mpatches.Patch(color = '#4AC16D',label='2015')
 patch7 = mpatches.Patch(color = '#A0DA39',label='2016')
 patch8 = mpatches.Patch(color = '#FCE625',label='2017')
 plt.legend(handles=[patch1,patch2,patch3,patch4,patch5,patch6,patch7,patch8])
+=======
+red_patch1 = mpatches.Patch(color='red', label='2010')
+red_patch2 = mpatches.Patch(color='red', label='2011')
+red_patch3 = mpatches.Patch(color='red', label='2012')
+red_patch4 = mpatches.Patch(color='red', label='2013')
+red_patch5 = mpatches.Patch(color='red', label='2014')
+red_patch6 = mpatches.Patch(color='red', label='2015')
+red_patch7 = mpatches.Patch(color='green', label='2016')
+red_patch8 = mpatches.Patch(color='blue', label='2017')
+plt.legend(handles=[red_patch1,red_patch2,red_patch3,red_patch4,red_patch5,red_patch6,red_patch7,red_patch8],bbox_to_anchor=(1.2, 1))
+
+
+>>>>>>> 180be3e526e697afa4a3090e2056afe02819ddf0
 
 
 plt.show()
