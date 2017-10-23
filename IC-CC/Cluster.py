@@ -3,7 +3,7 @@ style.use('ggplot')
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import matplotlib.patches as mpatches
 
 
 def rand_jitter(arr):
@@ -42,6 +42,8 @@ def Preprocessing(name,columns):
 ##########################################################################################################
 clm = ['Codigo_do_Jogador', 'Sexo', 'Data', 'Idade', 'Tempo', 'TipoAprendizagem','CodigoAprendizagem',
        'ValorAprendizagem', 'Classificacao']
+
+
 df = Preprocessing('teste18.csv',clm)
 
 
@@ -61,16 +63,22 @@ second = input("Eixo-Y:")
 x = dict[first]
 y = dict[second]
 
-plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.5,s=100,color = 'green',marker= '^')
+plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.5,s=100,c = df.Data,marker= '^')
 plt.title(clm[first - 1] + " X " + clm[second - 1])
 plt.xlabel(clm[first - 1])
 plt.ylabel(clm[second - 1])
+
+red_patch1 = mpatches.Patch(color='red', label='2010')
+red_patch2 = mpatches.Patch(color='red', label='2011')
+red_patch3 = mpatches.Patch(color='red', label='2012')
+red_patch4 = mpatches.Patch(color='red', label='2013')
+red_patch5 = mpatches.Patch(color='red', label='2014')
+red_patch6 = mpatches.Patch(color='red', label='2015')
+red_patch7 = mpatches.Patch(color='green', label='2016')
+red_patch8 = mpatches.Patch(color='blue', label='2017')
+plt.legend(handles=[red_patch1,red_patch2,red_patch3,red_patch4,red_patch5,red_patch6,red_patch7,red_patch8],bbox_to_anchor=(1.2, 1))
 
 
 
 
 plt.show()
-
-
-
-
