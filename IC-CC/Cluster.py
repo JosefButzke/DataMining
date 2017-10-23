@@ -65,7 +65,7 @@ y = dict[second]
 
 
 
-plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.6,s=300,c = df.Data,marker= 'o')
+plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.6,s=100,c = df.Data,marker= 'o')
 plt.title(clm[first - 1] + " X " + clm[second - 1])
 plt.xlabel(clm[first - 1])
 plt.ylabel(clm[second - 1])
