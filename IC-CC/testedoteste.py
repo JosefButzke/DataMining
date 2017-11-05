@@ -1,11 +1,4 @@
-import pylab
+c = [3,3,3]
+c =map(lambda x: x /3, c)
 
-names = ['anne','barbara','cathy']
-counts = [3230,2002,5456]
-
-pylab.figure(1)
-x = range(3)
-pylab.xticks(x, names)
-pylab.plot(x,counts,"g")
-
-pylab.show()
+print c
