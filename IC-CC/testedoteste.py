@@ -1,9 +1,11 @@
-A = [[1,3],[2,4],[7,8]]
+import pylab
 
-x= []
-y = []
-for i in range (len(A)):
-    x.append(A[i][0])
-    y.append(A[i][1])
+names = ['anne','barbara','cathy']
+counts = [3230,2002,5456]
 
-print (x)
+pylab.figure(1)
+x = range(3)
+pylab.xticks(x, names)
+pylab.plot(x,counts,"g")
+
+pylab.show()

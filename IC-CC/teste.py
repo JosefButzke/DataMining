@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from sklearn.cluster import KMeans
 
-
 def rand_jitter(arr):
-    stdev = .001*(max(arr)-min(arr))
-    return arr + np.random.randn(len(arr)) * stdev
+    if type(arr) != str:
+        stdev = .001*(max(arr)-min(arr))
+        return arr + np.random.randn(len(arr)) * stdev
+    return arr
 
-def Preprocessing(name,columns):
-    df = pd.read_csv(name, delimiter=',')
+def Preprocessing(df,columns):
     pd.DataFrame(
         columns= columns)
 
@@ -39,28 +39,19 @@ def Preprocessing(name,columns):
     df = handle_non_numerical_data(df)
     return df
 
-#########################################################################################################
 
-import subprocess
-subprocess.Popen(r'explorer /select,"c:\temp\"')
-from Tkinter import Tk
-mypath = "c:/temp/teste.py"
-r = Tk()
-r.withdraw()
-r.clipboard_clear()
-r.clipboard_append(mypath)
-r.destroy()
+
+df = pd.read_csv('teste18.csv',delimiter=',')
+
+names = set(df[df.columns.values[2 - 1]].values.tolist())
 
 ##########################################################################################################
-##########################################################################################################
-clm = ['Codigo_do_Jogador', 'Sexo', 'Data', 'Idade', 'Tempo', 'TipoAprendizagem','CodigoAprendizagem',
-       'ValorAprendizagem', 'Classificacao']
 
 
-df = Preprocessing('teste18.csv',clm)
 
 
-dict = {1: df.Codigo_do_Jogador,2: df.Sexo,3: df.Data,4: df.Idade,5: df.Tempo,6: df.TipoAprendizagem,7: df.CodigoAprendizagem,8: df.ValorAprendizagem,9: df.Classificacao}
+
+
 print("DEFINICAO DE RELACOES")
 print("1-Codigo_do_Jogador")
 print("2-Sexo")
@@ -73,9 +64,48 @@ print("8-ValorAprendizagem")
 print("9-Classificacao")
 first = input("Eixo-X:")
 second = input("Eixo-Y:")
-x = dict[first]
-y = dict[second]
 
+
+
+if (df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64) or \
+        (df[df.columns[second-1]].dtype != np.int64 and df[df.columns[second-1]].dtype != np.float64):
+    #########################################################################################################
+    if(df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64):
+        names = set(df[df.columns.values[first - 1]].values.tolist())
+        x = range(len(set(df[df.columns.values[first - 1]].values.tolist())))
+        plt.xticks(x, names)
+    else:
+        names = set(df[df.columns.values[second - 1]].values.tolist())
+        y = range(len(set(df[df.columns.values[second - 1]].values.tolist())))
+        plt.yticks(y, names)
+    #########################################################################################################
+
+    df = Preprocessing(df, df.columns)
+
+    dict = {1: df.Codigo_do_Jogador, 2: df.Sexo, 3: df.Data, 4: df.Idade, 5: df.Tempo, 6: df.TipoAprendizagem,
+            7: df.CodigoAprendizagem, 8: df.ValorAprendizagem, 9: df.Classificacao}
+
+    x = dict[first]
+    y = dict[second]
+
+    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=df.Data, marker='o')
+    plt.title(df.columns.values[first - 1] + " X " + df.columns.values[second - 1])
+
+
+else:
+    dict = {1: df.Codigo_do_Jogador, 2: df.Sexo, 3: df.Data, 4: df.Idade, 5: df.Tempo, 6: df.TipoAprendizagem,
+            7: df.CodigoAprendizagem, 8: df.ValorAprendizagem, 9: df.Classificacao}
+
+    x = dict[first]
+    y = dict[second]
+
+    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=df.Data, marker='o')
+    plt.title(df.columns.values[first - 1] + " X " + df.columns.values[second - 1])
+    plt.xlabel(df.columns.values[first - 1])
+    plt.ylabel(df.columns.values[second - 1])
+
+
+""""
 data = []
 
 for i in x:
@@ -84,14 +114,6 @@ for i in x:
 
 kmeans = KMeans(n_clusters=3, random_state=10).fit(data)
 centers = kmeans.cluster_centers_
-
-
-plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.6,s=100,c = df.Data,marker= 'o')
-plt.title(clm[first - 1] + " X " + clm[second - 1])
-plt.xlabel(clm[first - 1])
-plt.ylabel(clm[second - 1])
-
-
 cx = []
 cy = []
 for i in range (len(kmeans.cluster_centers_)):
@@ -101,5 +123,5 @@ for i in range (len(kmeans.cluster_centers_)):
 
 plt.scatter(cx,cy,s=100,c = 'red',marker= 'x')
 
-
+"""
 plt.show()
