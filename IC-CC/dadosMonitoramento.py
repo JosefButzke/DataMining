@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 
 def rand_jitter(arr):
     stdev = .01*(max(arr)-min(arr))
@@ -71,11 +72,28 @@ def main():
 
     x = dictClm[first]
     y = dictClm[second]
+
+    data = []
+
+    for i in x:
+        data.append([x[i], y[i]])
+
+    kmeans = KMeans(n_clusters=3, random_state=10).fit(data)
+    centers = kmeans.cluster_centers_
+
     plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.5, s=100, color='green', marker='^')
     plt.title(clm[first - 1] + " X " + clm[second - 1])
     plt.xlabel(clm[first - 1])
     plt.ylabel(clm[second - 1])
     plt.show()
+
+    cx = []
+    cy = []
+    for i in range(len(kmeans.cluster_centers_)):
+        cx.append(kmeans.cluster_centers_[i][0])
+        cy.append(kmeans.cluster_centers_[i][1])
+
+    plt.scatter(cx, cy, s=100, c='red', marker='x')
 
 if __name__ == "__main__":
     main()
