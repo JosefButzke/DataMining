@@ -43,9 +43,11 @@ def Preprocessing(name,columns):
 clm = ['Codigo_do_Jogador', 'Sexo', 'Data', 'Idade', 'Tempo', 'TipoAprendizagem','CodigoAprendizagem',
        'ValorAprendizagem', 'Classificacao']
 
+clm1 = ['a','b','c','d','e','f','g','h','i','j','k','l']
 
-df = Preprocessing('teste18.csv',clm)
+df = Preprocessing('teste18.csv',clm1)
 
+print df.columns.values
 
 dict = {1: df.Codigo_do_Jogador,2: df.Sexo,3: df.Data,4: df.Idade,5: df.Tempo,6: df.TipoAprendizagem,7: df.CodigoAprendizagem,8: df.ValorAprendizagem,9: df.Classificacao}
 print("DEFINICAO DE RELACOES")

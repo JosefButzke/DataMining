@@ -39,6 +39,17 @@ def Preprocessing(name,columns):
     df = handle_non_numerical_data(df)
     return df
 
+#########################################################################################################
+
+import subprocess
+subprocess.Popen(r'explorer /select,"c:\temp\"')
+from Tkinter import Tk
+mypath = "c:/temp/teste.py"
+r = Tk()
+r.withdraw()
+r.clipboard_clear()
+r.clipboard_append(mypath)
+r.destroy()
 
 ##########################################################################################################
 ##########################################################################################################
