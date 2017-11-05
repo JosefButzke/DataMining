@@ -1,17 +1,19 @@
+from sklearn import cluster
+import pandas as pd
 from matplotlib import style
 style.use('ggplot')
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-
+from sklearn.cluster import KMeans
 
 def rand_jitter(arr):
-    stdev = .001*(max(arr)-min(arr))
-    return arr + np.random.randn(len(arr)) * stdev
+    if type(arr) != str:
+        stdev = .001*(max(arr)-min(arr))
+        return arr + np.random.randn(len(arr)) * stdev
+    return arr
 
-def Preprocessing(name,columns):
-    df = pd.read_csv(name, delimiter=',')
+def Preprocessing(df,columns):
     pd.DataFrame(
         columns= columns)
 
@@ -38,18 +40,18 @@ def Preprocessing(name,columns):
     return df
 
 
+
+df = pd.read_csv('teste18.csv',delimiter=',')
+
+names = set(df[df.columns.values[2 - 1]].values.tolist())
+
 ##########################################################################################################
-##########################################################################################################
-clm = ['Codigo_do_Jogador', 'Sexo', 'Data', 'Idade', 'Tempo', 'TipoAprendizagem','CodigoAprendizagem',
-       'ValorAprendizagem', 'Classificacao']
 
-clm1 = ['a','b','c','d','e','f','g','h','i','j','k','l']
 
-df = Preprocessing('teste18.csv',clm1)
 
-print df.columns.values
 
-dict = {1: df.Codigo_do_Jogador,2: df.Sexo,3: df.Data,4: df.Idade,5: df.Tempo,6: df.TipoAprendizagem,7: df.CodigoAprendizagem,8: df.ValorAprendizagem,9: df.Classificacao}
+
+
 print("DEFINICAO DE RELACOES")
 print("1-Codigo_do_Jogador")
 print("2-Sexo")
@@ -62,26 +64,64 @@ print("8-ValorAprendizagem")
 print("9-Classificacao")
 first = input("Eixo-X:")
 second = input("Eixo-Y:")
-x = dict[first]
-y = dict[second]
 
 
 
-plt.scatter(rand_jitter(x),rand_jitter(y),alpha = 0.6,s=100,c = df.Data,marker= 'o')
-plt.title(clm[first - 1] + " X " + clm[second - 1])
-plt.xlabel(clm[first - 1])
-plt.ylabel(clm[second - 1])
+if (df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64) or \
+        (df[df.columns[second-1]].dtype != np.int64 and df[df.columns[second-1]].dtype != np.float64):
+    #########################################################################################################
+    if(df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64):
+        names = set(df[df.columns.values[first - 1]].values.tolist())
+        x = range(len(set(df[df.columns.values[first - 1]].values.tolist())))
+        plt.xticks(x, names)
+    else:
+        names = set(df[df.columns.values[second - 1]].values.tolist())
+        y = range(len(set(df[df.columns.values[second - 1]].values.tolist())))
+        plt.yticks(y, names)
+    #########################################################################################################
+
+    df = Preprocessing(df, df.columns)
+
+    dict = {1: df.Codigo_do_Jogador, 2: df.Sexo, 3: df.Data, 4: df.Idade, 5: df.Tempo, 6: df.TipoAprendizagem,
+            7: df.CodigoAprendizagem, 8: df.ValorAprendizagem, 9: df.Classificacao}
+
+    x = dict[first]
+    y = dict[second]
+
+    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=df.Data, marker='o')
+    plt.title(df.columns.values[first - 1] + " X " + df.columns.values[second - 1])
 
 
-patch1 = mpatches.Patch(color = '#440154',label='2010')
-patch2 = mpatches.Patch(color = '#46327E',label='2011')
-patch3 = mpatches.Patch(color = '#365C8D',label='2012')
-patch4 = mpatches.Patch(color = '#277F8E',label='2013')
-patch5 = mpatches.Patch(color = '#1FA187',label='2014')
-patch6 = mpatches.Patch(color = '#4AC16D',label='2015')
-patch7 = mpatches.Patch(color = '#A0DA39',label='2016')
-patch8 = mpatches.Patch(color = '#FCE625',label='2017')
-plt.legend(handles=[patch1,patch2,patch3,patch4,patch5,patch6,patch7,patch8])
+else:
+    dict = {1: df.Codigo_do_Jogador, 2: df.Sexo, 3: df.Data, 4: df.Idade, 5: df.Tempo, 6: df.TipoAprendizagem,
+            7: df.CodigoAprendizagem, 8: df.ValorAprendizagem, 9: df.Classificacao}
+
+    x = dict[first]
+    y = dict[second]
+
+    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=df.Data, marker='o')
+    plt.title(df.columns.values[first - 1] + " X " + df.columns.values[second - 1])
+    plt.xlabel(df.columns.values[first - 1])
+    plt.ylabel(df.columns.values[second - 1])
 
 
+""""
+data = []
+
+for i in x:
+    data.append([x[i],y[i]])
+
+
+kmeans = KMeans(n_clusters=3, random_state=10).fit(data)
+centers = kmeans.cluster_centers_
+cx = []
+cy = []
+for i in range (len(kmeans.cluster_centers_)):
+    cx.append(kmeans.cluster_centers_[i][0])
+    cy.append(kmeans.cluster_centers_[i][1])
+
+
+plt.scatter(cx,cy,s=100,c = 'red',marker= 'x')
+
+"""
 plt.show()
