@@ -1,7 +1,7 @@
 digraph Tree {
 node [shape=box] ;
-0 [label="X[0] <= 6.5\ngini = 0.66\nsamples = 1000\nvalue = [290, 399, 311]"] ;
-1 [label="X[4] <= 10.5\ngini = 0.499\nsamples = 601\nvalue = [290, 0, 311]"] ;
+0 [label="X[4] <= 20.5\ngini = 0.66\nsamples = 1000\nvalue = [290, 399, 311]"] ;
+1 [label="X[7] <= 3.5\ngini = 0.499\nsamples = 601\nvalue = [290, 0, 311]"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
 2 [label="gini = 0.0\nsamples = 290\nvalue = [290, 0, 0]"] ;
 1 -> 2 ;

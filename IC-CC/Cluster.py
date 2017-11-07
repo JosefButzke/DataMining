@@ -1,10 +1,9 @@
 from tkinter import filedialog,Tk
 import pandas as pd
-from matplotlib import style
-style.use('ggplot')
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+
 
 def rand_jitter(arr):
     if type(arr) != str:
@@ -38,31 +37,26 @@ def Preprocessing(df,columns):
     df = handle_non_numerical_data(df)
     return df
 
-
 root = Tk()
 root.fileName = filedialog.askopenfilename(filetypes = (("howCode files","*.csv"),("All files","*.*")))
 root.destroy()
 df = pd.read_csv(root.fileName,delimiter=',')
 
-
-##########################################################################################################
-print("DEFINICAO DE RELACOES")
-print("1-Codigo_do_Jogador")
-print("2-Sexo")
-print("3-Data")
-print("4-Idade")
-print("5-Tempo")
-print("6-TipoAprendizagem")
-print("7-CodigoAprendizagem")
-print("8-ValorAprendizagem")
-print("9-Classificacao")
+menu = df.columns.values
+indice = 1
+for i in menu:
+    print(str(indice) + str("-") + str(i))
+    indice += 1
 first = input("Eixo-X:")
 second = input("Eixo-Y:")
+third = input("Cor dos Pontos:")
+cores = ['#440154','#46327E','#365C8D','#277F8E','#1FA187','#4AC16D','#A0DA39','#FCE625']
 ##########################################################################################################
 
 if (df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64) or \
         (df[df.columns[second-1]].dtype != np.int64 and df[df.columns[second-1]].dtype != np.float64):
     #########################################################################################################
+
     if(df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64):
         names = set(df[df.columns.values[first - 1]].values.tolist())
         x = range(len(set(df[df.columns.values[first - 1]].values.tolist())))
@@ -76,29 +70,49 @@ if (df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype 
 
     x = df[df.columns[first-1]]
     y = df[df.columns[second-1]]
+    z = df[df.columns[third - 1]]
 
-    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=df.Data, marker='o')
+    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=z, marker='o')
     plt.title(df.columns.values[first - 1] + " X " + df.columns.values[second - 1])
 
 
 else:
     x = df[df.columns[first - 1]]
     y = df[df.columns[second - 1]]
+    z = df[df.columns[third - 1]]
 
-    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=df.Data, marker='o')
+
+    plt.scatter(rand_jitter(x), rand_jitter(y), alpha=0.6, s=100, c=z, marker='o')
     plt.title(df.columns.values[first - 1] + " X " + df.columns.values[second - 1])
     plt.xlabel(df.columns.values[first - 1])
     plt.ylabel(df.columns.values[second - 1])
 
-patch1 = mpatches.Patch(color = '#440154',label='2010')
-patch2 = mpatches.Patch(color = '#46327E',label='2011')
-patch3 = mpatches.Patch(color = '#365C8D',label='2012')
-patch4 = mpatches.Patch(color = '#277F8E',label='2013')
-patch5 = mpatches.Patch(color = '#1FA187',label='2014')
-patch6 = mpatches.Patch(color = '#4AC16D',label='2015')
-patch7 = mpatches.Patch(color = '#A0DA39',label='2016')
-patch8 = mpatches.Patch(color = '#FCE625',label='2017')
-plt.legend(handles=[patch1,patch2,patch3,patch4,patch5,patch6,patch7,patch8])
+plt.subplots_adjust(top=0.95, bottom=0.1, left=0.11, right=0.8)
+
+if(third is not None):
+    legenda =  set(df[df.columns.values[third - 1]])
+    legenda = sorted(legenda)
+
+    vet = []
+    x = sorted(legenda)
+    vet.append(min(x))
+    vet.append(x[len(x) / 8])
+    vet.append(x[2 * len(x) / 8])
+    vet.append(x[3 * len(x) / 8])
+    vet.append(x[4 * len(x) / 8])
+    vet.append(x[5 * len(x) / 8])
+    vet.append(x[6 * len(x) / 8])
+    vet.append(max(x))
+
+
+    ind = 0
+    patch = []
+    while(ind <= len(vet) - 1):
+        patch.append(mpatches.Patch(color = cores[ind] , label=vet[ind]))
+        ind += 1
+
+    plt.legend(handles=patch,bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+
 
 
 
