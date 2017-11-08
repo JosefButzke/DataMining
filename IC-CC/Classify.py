@@ -30,10 +30,6 @@ alun.data = alun.values[:,0:8]
 alun.target = alun.values[:,8]
 
 
-
-
-
-
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(alun.data,alun.target)
 
