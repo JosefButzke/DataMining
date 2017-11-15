@@ -22,6 +22,7 @@ def handle_non_numerical_data(df):
                     x+=1
             df[column] = list(map(convert_to_int, df[column]))
     return df
+
 alun = handle_non_numerical_data(alun)
 
 
