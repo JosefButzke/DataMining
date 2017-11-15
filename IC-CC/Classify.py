@@ -46,18 +46,15 @@ DIFICULDADE-    1
 MEDIO-          2
 BOM-            0
 """
+
 vet = []
-print("Entre com os dados(string devem ser declarados como numeros de acordo com a tabela acima):")
-vet.append(input("Codigo_do_Jogador: "))
-vet.append(input("Sexo(M=0,F = 1): "))
-vet.append(input("Data: "))
-vet.append(input("Idade: "))
-vet.append(input("Tempo: "))
-vet.append(input("TipoAprendizagem(A=0,H=1,C=2): "))
-vet.append(input("CodigoAprendizagem: "))
-vet.append(input("ValorAprendizagem: "))
 
-
+menu = alun.columns.values
+indice = 1
+for i in range(len(menu) - 1):
+    print(str(indice) + str("-") + alun.columns[i])
+    vet.append(input())
+    indice += 1
 
 
 resul = clf.predict([vet])

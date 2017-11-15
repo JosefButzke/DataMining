@@ -3,14 +3,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-
+from sklearn.cluster import KMeans
 
 def rand_jitter(arr):
     if type(arr) != str:
         stdev = .001*(max(arr)-min(arr))
         return arr + np.random.randn(len(arr)) * stdev
     return arr
-
 
 def Preprocessing(df,columns):
     pd.DataFrame(
@@ -55,7 +54,7 @@ third = input("Cor dos Pontos:")
 cores = ['#440154','#46327E','#365C8D','#277F8E','#1FA187','#4AC16D','#A0DA39','#FCE625']
 ##########################################################################################################
 
-if (df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype != np.float64) or \
+if (df[df.columns[first - 1]].dtype != np.int64 and df[df.columns[first - 1]].dtype != np.float64) or \
         (df[df.columns[second-1]].dtype != np.int64 and df[df.columns[second-1]].dtype != np.float64):
     #########################################################################################################
 
@@ -69,7 +68,6 @@ if (df[df.columns[first-1]].dtype != np.int64 and df[df.columns[first-1]].dtype 
         plt.yticks(y, names)
     #########################################################################################################
     df = Preprocessing(df, df.columns)
-
 
     x = df[df.columns[first-1]]
     y = df[df.columns[second-1]]
@@ -118,5 +116,19 @@ if(third is not None):
 
     plt.legend(handles=patch,bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
+w = []
+x1 = df[df.columns[first - 1]].tolist()
+x2 = df[df.columns[second - 1]].tolist()
+for i in range(len(x1)):
+    w.append([x1[i],x2[i]])
+
+n_clusters = int(input("Quantidade de Cluster:"))
+clf = KMeans(n_clusters=n_clusters)
+#df = df.convert_objects(convert_numeric=True)
+clf.fit(w)
+
+centroids = clf.cluster_centers_
+labels = clf.labels_
+plt.scatter(centroids[:,0], centroids[:,1],marker = 'x',c = 'red',s = 300)
 
 plt.show()
