@@ -27,12 +27,12 @@ alun = handle_non_numerical_data(alun)
 
 
 
-alun.data = alun.values[:,0:8]
-alun.target = alun.values[:,8]
+X = alun.values[:,0:8]
+Y = alun.values[:,8]
 
 
 clf = tree.DecisionTreeClassifier()
-clf = clf.fit(alun.data,alun.target)
+clf = clf.fit(X,Y)
 
 """
 A-              0
