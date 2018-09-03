@@ -2,8 +2,10 @@ import graphviz
 from sklearn import tree
 import pandas as pd
 import numpy as np
+from sklearn.metrics import accuracy_score
 
-alun = pd.read_csv('teste18.csv',delimiter=',')
+#alun = pd.read_csv('teste18.csv',delimiter=',')
+alun = pd.read_csv('Evasao.csv',delimiter=',')
 results = {0: 'Bom',1:'Dificuldade' ,2: 'Medio'}
 
 def handle_non_numerical_data(df):
@@ -26,13 +28,27 @@ def handle_non_numerical_data(df):
 alun = handle_non_numerical_data(alun)
 
 
-
-X = alun.values[:,0:8]
-Y = alun.values[:,8]
+X = alun.values[:,0:len(alun.columns)-1]
+Y = alun.values[:,len(alun.columns)-1]
 
 
 clf = tree.DecisionTreeClassifier()
+
+
+#alun_X = X
+#alun_y = Y
+#np.random.seed(0)
+#indices = np.random.permutation(len(alun_X))
+#alun_X_train = alun_X[indices[:-1000]]
+#alun_y_train = alun_y[indices[:-1000]]
+#alun_X_test  = alun_X[indices[-1000:]]
+#alun_y_test  = alun_y[indices[-1000:]]
 clf = clf.fit(X,Y)
+#print(accuracy_score( Y, alun_y_test))
+#print(clf.predict(alun_X_test))
+#print(alun_y_test)
+
+#print(clf)
 
 """
 A-              0
@@ -59,15 +75,17 @@ for i in range(len(menu) - 1):
 
 resul = clf.predict([vet])
 
-print ("Predicao para: " + str(vet)+ "\n" + "eh: " + str(results[int(resul)]))
+#print ("Predicao para: " + str(vet)+ "\n" + "eh: " + str(results[int(resul)]))
+print ("Predicao para: " + str(vet)+ "\n" + "eh: " + str(int(resul)))
 
-dot_data = tree.export_graphviz(clf, out_file=None)
-graph = graphviz.Source(dot_data)
-graph.render("Alun")
 
-dot_data = tree.export_graphviz(clf, out_file=None)
-graph = graphviz.Source(dot_data)
-graph.render()
+
+#graph = graphviz.Source(dot_data)
+#graph.render("Alun")
+
+#dot_data = tree.export_graphviz(clf, out_file=None)
+#graph = graphviz.Source(dot_data)
+#graph.render()
 
 
 """
